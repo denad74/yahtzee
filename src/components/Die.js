@@ -1,5 +1,5 @@
 import React from "react";
-import "./Die.css";
+import "../style/Die.css";
 
 const Die = ({val=5, locked, rolling, disabled, index,handleClick}) => {
 

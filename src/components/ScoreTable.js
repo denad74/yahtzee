@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import RuleRow from "./RuleRow";
-import "./ScoreTable.css";
+import "../style/ScoreTable.css";
 import {
   ones,
   twos,
@@ -15,20 +15,42 @@ import {
   largeStraight,
   yahtzee,
   chance
-} from "./helpers";
+} from "../helper/helpers";
 
-const ScoreTable = ({scores, doScore}) => {
+  const ScoreTable = ({ scores, doScore }) => {
   
+  
+  const scoreLocal = JSON.parse(localStorage.getItem('highGamesScore'));
+  //const [highGamesScore, setHighsGamesScore] = useState(scoreLocal)
+  // const [totalScoreofGame, setTotalScoreofGame] = useState(0)
+    //console.log(hig);
   const getTotalScore = () =>{
    
     let totalScore = 0;
     for (let key in scores) {
-      if (scores[key]) totalScore += scores[key];
+      if (scores[key]) {
+        totalScore += scores[key]
+      };
+     
     }
-    return totalScore;
+    return totalScore
+    // setTotalScoreofGame(totalScore)
   }
+
+    const biggerNum = () =>{
+      const bigger = Math.max(scoreLocal, getTotalScore())
+      return bigger;
+    }
+    
+    
   
-  
+  useEffect(() => {
+  // storing data in localStorage
+    // setHighsGamesScore();
+    //setHighsGamesScore(biggerNum())
+    localStorage.setItem("highGamesScore", JSON.stringify(biggerNum()));
+  }, [biggerNum()
+  ,]);
 
     return (
       <div className='ScoreTable'>
@@ -129,6 +151,7 @@ const ScoreTable = ({scores, doScore}) => {
           </table>
         </section>
         <h2>TOTAL SCORE: {getTotalScore()}</h2>
+        <h2>HIGH SCORE: {biggerNum()}</h2>
       </div>
     );
   

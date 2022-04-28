@@ -1,5 +1,5 @@
 import React from 'react';
-import './RuleRow.css'
+import '../style/RuleRow.css'
 
 const RuleRow = ({ score, name, doScore, description }) => {
   const disabled = score !== undefined;

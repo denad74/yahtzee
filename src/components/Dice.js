@@ -1,6 +1,6 @@
 import React from 'react';
 import Die from './Die';
-import './Dice.css';
+import '../style/Dice.css';
 
 const Dice = (props) => {
 
