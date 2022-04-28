@@ -9,13 +9,9 @@ const NUM_ROLLS = 3;
 const Game = () => {
 
   const [dice, setDice] = useState(Array.from({ length: NUM_DICE })); //Pravi niz 5 undifined
-  
-
 
   const [locked, setLocked] = useState(Array(NUM_DICE).fill(false)); //Ne dozvoljava selektovanje
   const [rollsLeft, setRollsLeft] = useState(NUM_ROLLS); // Broj Pokusaja
-
-
 
   const [rolling, setRolling] = useState(false)
   const [scores, setScores] = useState(
@@ -36,9 +32,7 @@ const Game = () => {
     }); // Objekat rezultata
   
   
-  useEffect(() => {
-    animateRoll()
-  }, [scores]);
+  
   
   const rollDiceHandler = () => {
     // roll dice whose indexes are in reroll
@@ -52,7 +46,7 @@ const Game = () => {
   }
 
   const animateRoll = () => {
-    console.log(locked);
+    // console.log(locked);
     
     setRolling(true);
     setTimeout(rollDiceHandler, 500
@@ -70,14 +64,16 @@ const Game = () => {
 
   const doScore = (ruleName, ruleFn) => {
 
+    
     setLocked(locked.map(el => el === true ? false : true))
 
     setScores({ ...scores, [ruleName]: ruleFn(dice) });
     setRollsLeft(NUM_ROLLS);
-
-     animateRoll()
+    
+    animateRoll()
+    
   }
- 
+
  const displayRollInfo = () => {
     const messages = [
       "0 Rolls Left",
@@ -86,10 +82,76 @@ const Game = () => {
       "Starting Round"
     ];
     return messages[rollsLeft];
+ }
+  
+ useEffect(() => {
+    animateRoll()
+    setScores(scores)
+     let araTrue = Object.values(scores).every(
+      value => value !== undefined || 0);
+   if (araTrue) {
+     setTimeout(restargtGameHandler, 2000);
+     
+   }
+  }, [scores]);
+ 
+  const restargtGameHandler = () => {
+    setDice(Array.from({ length: NUM_DICE }));//Pravi niz 5 undifined
+        setLocked(Array(NUM_DICE).fill(false)); //Ne dozvoljava selektovanje
+        setRollsLeft(NUM_ROLLS); // Broj Pokusaja
+        setRolling(false)
+        setScores({
+          ones: undefined,
+          twos: undefined,
+          threes: undefined,
+          fours: undefined,
+          fives: undefined,
+          sixes: undefined,
+          threeOfKind: undefined,
+          fourOfKind: undefined,
+          fullHouse: undefined,
+          smallStraight: undefined,
+          largeStraight: undefined,
+          yahtzee: undefined,
+          chance: undefined
+        })
   }
 
 
-
+  
+  // function restartGame() {
+    
+  //   for (const key in scores) {
+  //     if (scores[key] !== undefined) {
+  //       console.log('to je to');
+  //     }
+      // setDice(Array.from({ length: NUM_DICE }));//Pravi niz 5 undifined
+      // setLocked(Array(NUM_DICE).fill(false)); //Ne dozvoljava selektovanje
+      // setRollsLeft(NUM_ROLLS); // Broj Pokusaja
+      // setRolling(false)
+      // setScores({
+      //   ones: undefined,
+      //   twos: undefined,
+      //   threes: undefined,
+      //   fours: undefined,
+      //   fives: undefined,
+      //   sixes: undefined,
+      //   threeOfKind: undefined,
+      //   fourOfKind: undefined,
+      //   fullHouse: undefined,
+      //   smallStraight: undefined,
+      //   largeStraight: undefined,
+      //   yahtzee: undefined,
+      //   chance: undefined
+      // })
+    
+      
+  //     else {
+  //       console.log('yupiiii');
+  //     }
+    
+  //   }
+  // }
  
     return (
       <div className='Game'>
@@ -116,6 +178,7 @@ const Game = () => {
           </section>
         </header>
         <ScoreTable doScore={doScore} scores={scores} />
+        <button onClick={restargtGameHandler}>Restart Game</button>
       </div>
     );
   }

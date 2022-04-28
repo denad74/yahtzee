@@ -3,6 +3,8 @@ import '../style/RuleRow.css'
 
 const RuleRow = ({ score, name, doScore, description }) => {
   const disabled = score !== undefined;
+
+ 
   return (
       
       <tr

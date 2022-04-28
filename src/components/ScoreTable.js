@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import RuleRow from "./RuleRow";
 import "../style/ScoreTable.css";
 import {
@@ -17,13 +17,21 @@ import {
   chance
 } from "../helper/helpers";
 
-  const ScoreTable = ({ scores, doScore }) => {
-  
+const ScoreTable = ({ scores, doScore }) => {
+    
+    // const test = {...scores}
+    //  const areTrue = Object.values(test).every(
+    //   value => value === !undefined);
+    // console.log(areTrue);
   
   const scoreLocal = JSON.parse(localStorage.getItem('highGamesScore'));
   //const [highGamesScore, setHighsGamesScore] = useState(scoreLocal)
   // const [totalScoreofGame, setTotalScoreofGame] = useState(0)
     //console.log(hig);
+    // const areTrue = Object.values(scores).every(
+    //   value => value === true);
+    // console.log(areTrue);
+   
   const getTotalScore = () =>{
    
     let totalScore = 0;
@@ -41,13 +49,11 @@ import {
       const bigger = Math.max(scoreLocal, getTotalScore())
       return bigger;
     }
-    
+ 
     
   
   useEffect(() => {
   // storing data in localStorage
-    // setHighsGamesScore();
-    //setHighsGamesScore(biggerNum())
     localStorage.setItem("highGamesScore", JSON.stringify(biggerNum()));
   }, [biggerNum()
   ,]);
