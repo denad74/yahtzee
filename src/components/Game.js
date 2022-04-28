@@ -14,6 +14,8 @@ const Game = () => {
   const [rollsLeft, setRollsLeft] = useState(NUM_ROLLS); // Broj Pokusaja
 
   const [rolling, setRolling] = useState(false)
+
+  const [show, setShow] = useState(false)
   const [scores, setScores] = useState(
     {
       ones: undefined,
@@ -90,8 +92,13 @@ const Game = () => {
      let araTrue = Object.values(scores).every(
       value => value !== undefined || 0);
    if (araTrue) {
-     setTimeout(restargtGameHandler, 2000);
-     
+     setShow(true)
+     setTimeout(
+       
+       () => {
+       setShow(false);
+       restargtGameHandler()
+     }, 5000);
    }
   }, [scores]);
  
@@ -152,12 +159,16 @@ const Game = () => {
     
   //   }
   // }
- 
+
+  
+  window.addEventListener("beforeunload", function (e) {
+   localStorage.removeItem('highGamesScore');
+  
+}, false);
     return (
       <div className='Game'>
         <header className='Game-header'>
           <h1 className='App-title'>Yahtzee!</h1>
-
           <section className='Game-dice-section'>
             <Dice
               dice={dice}
@@ -178,7 +189,7 @@ const Game = () => {
           </section>
         </header>
         <ScoreTable doScore={doScore} scores={scores} />
-        <button onClick={restargtGameHandler}>Restart Game</button>
+        {show && <button onClick={restargtGameHandler}>Restart Game</button>}
       </div>
     );
   }

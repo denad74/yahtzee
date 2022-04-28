@@ -157,7 +157,7 @@ const ScoreTable = ({ scores, doScore }) => {
           </table>
         </section>
         <h2>TOTAL SCORE: {getTotalScore()}</h2>
-        <h2>HIGH SCORE: {biggerNum()}</h2>
+        {scoreLocal ||  scoreLocal !==  0 && <h2>HIGHSCORE: {biggerNum()}</h2>}
       </div>
     );
   
